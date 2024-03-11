@@ -19,6 +19,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * @author Greg Turnquist
@@ -33,17 +34,19 @@ public class Employee {
     private String lastName;
     private String description;
     private Integer jobYears;
+    private String email;
 
     private Employee() {
     }
 
-    public Employee(String firstName, String lastName, String description, Integer jobYears) throws InstantiationException {
+    public Employee(String firstName, String lastName, String description, Integer jobYears, String email) throws InstantiationException {
         try {
-            if (isConstructorArgumentsValid(firstName, lastName, description, jobYears)) {
+            if (isConstructorArgumentsValid(firstName, lastName, description, jobYears,email)) {
                 this.firstName = firstName;
                 this.lastName = lastName;
                 this.description = description;
                 this.jobYears = jobYears;
+                this.email = email;
             }
         } catch (Exception e) {
             throw new InstantiationException(e.getMessage());
@@ -59,17 +62,26 @@ public class Employee {
                 Objects.equals(firstName, employee.firstName) &&
                 Objects.equals(lastName, employee.lastName) &&
                 Objects.equals(jobYears, employee.jobYears) &&
+                Objects.equals(email, employee.email) &&
                 Objects.equals(description, employee.description);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, firstName, lastName, description, jobYears);
+        return Objects.hash(id, firstName, lastName, description, jobYears, email);
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getJobYears() {
@@ -120,7 +132,7 @@ public class Employee {
     }
 
 
-    private boolean isConstructorArgumentsValid(String firstName, String lastName, String description, Integer jobYears) throws InstantiationException {
+    private boolean isConstructorArgumentsValid(String firstName, String lastName, String description, Integer jobYears,String emailAddress) throws InstantiationException {
 
         if (firstName == null || firstName.isEmpty() || firstName.isBlank()) {
             throw new InstantiationException("Invalid first name.");
@@ -134,7 +146,17 @@ public class Employee {
         if (jobYears == null || jobYears < 0) {
             throw new InstantiationException("Invalid quantity of job years.");
         }
+        if (!patternMatches(emailAddress)) {
+            throw new InstantiationException("Invalid quantity of job years.");
+        }
+
         return true;
+    }
+
+    private static boolean patternMatches(String emailAddress) {
+        return Pattern.compile("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
+                .matcher(emailAddress)
+                .matches();
     }
 }
 // end::code[]

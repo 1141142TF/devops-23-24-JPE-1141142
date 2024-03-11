@@ -17,11 +17,12 @@ public class EmployeeTest {
         String description = "Legume";
         Integer jobYears = 2;
         String expectedMessage = "Invalid first name.";
+        String email="mail@algo.pt";
 
         //Act
 
         Exception exception = assertThrows(InstantiationException.class, () ->
-                new Employee(firstName, lastName, description, jobYears)
+                new Employee(firstName, lastName, description, jobYears,email)
         );
 
         //Assert
@@ -37,11 +38,12 @@ public class EmployeeTest {
         String description = "Legume";
         Integer jobYears = -2;
         String expectedMessage = "Invalid quantity of job years.";
+        String email="mail@algo.pt";
 
         //Act
 
         Exception exception = assertThrows(InstantiationException.class, () ->
-                new Employee(firstName, lastName, description, jobYears)
+                new Employee(firstName, lastName, description, jobYears,email)
         );
 
         //Assert
@@ -56,15 +58,37 @@ public class EmployeeTest {
         String lastName = "Nabo";
         String description = "Legume";
         Integer jobYears = 2;
+        String email="mail@algo.pt";
 
         //Act
-        Employee test = new Employee(firstName, lastName, description, jobYears);
+        Employee test = new Employee(firstName, lastName, description, jobYears,email);
 
         //Assert
         assertEquals(firstName, test.getFirstName());
         assertEquals(lastName, test.getLastName());
         assertEquals(description, test.getDescription());
         assertEquals(jobYears, test.getJobYears());
+        assertEquals(email, test.getEmail());
+    }
+
+    @Test
+    void invalidEmail_shouldThrowException() throws InstantiationException {
+        //Arrange
+        String firstName = "Senhor";
+        String lastName = "Nabo";
+        String description = "Legume";
+        Integer jobYears = -2;
+        String expectedMessage = "Invalid quantity of job years.";
+        String email="ma.i.l@algo.pt";
+
+        //Act
+
+        Exception exception = assertThrows(InstantiationException.class, () ->
+                new Employee(firstName, lastName, description, jobYears,email)
+        );
+
+        //Assert
+        assertEquals(expectedMessage, exception.getMessage());
 
     }
 
