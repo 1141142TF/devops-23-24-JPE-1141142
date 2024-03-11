@@ -92,4 +92,25 @@ public class EmployeeTest {
 
     }
 
+    @Test
+    void blankInvalidEmail_shouldThrowException() throws InstantiationException {
+        //Arrange
+        String firstName = "Senhor";
+        String lastName = "Nabo";
+        String description = "Legume";
+        Integer jobYears = -2;
+        String expectedMessage = "Invalid quantity of job years.";
+        String email="@algo.pt";
+
+        //Act
+
+        Exception exception = assertThrows(InstantiationException.class, () ->
+                new Employee(firstName, lastName, description, jobYears,email)
+        );
+
+        //Assert
+        assertEquals(expectedMessage, exception.getMessage());
+
+    }
+
 }
