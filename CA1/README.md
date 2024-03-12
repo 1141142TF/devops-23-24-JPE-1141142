@@ -85,7 +85,7 @@
 
 
 
-#PART 3 - Alternative Solution
+# PART 3 - Alternative Solution
 
 An alternative to git can be Fossil.
 
