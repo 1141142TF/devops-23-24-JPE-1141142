@@ -75,8 +75,15 @@ task runServer(type:JavaExec, dependsOn: classes){
     args '59001'
 }
 
-task copySourceFiles(type:Copy, dependsOn: classes){
+task copySourceFiles(type:Copy){
    from 'src/'
-    into('Backup')
+    into('Backup/srcBackup')
+}
+
+task zipSourceFiles(type: Zip) {
+    archiveFileName = "BackupZipped.zip"
+    destinationDirectory = file("/Backup")
+
+    from "src"
 }
 
