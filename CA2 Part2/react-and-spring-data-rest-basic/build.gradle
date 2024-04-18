@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.Copy
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.4'
@@ -34,3 +36,9 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+task copyGeneratedJar(type: Copy){
+    from 'build/libs'
+    into('dist')
+}
+
