@@ -42,3 +42,7 @@ task copyGeneratedJar(type: Copy){
     into('dist')
 }
 
+clean.doFirst {
+    file('src/main/resources/static/built/bundle.js').delete()
+    file('src/main/resources/static/built/bundle.js.map').delete()
+}
