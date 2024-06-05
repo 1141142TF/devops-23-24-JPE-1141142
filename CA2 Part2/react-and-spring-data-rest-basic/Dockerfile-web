@@ -1,0 +1,8 @@
+# syntax=docker/dockerfile:1
+FROM gradle:jdk17
+WORKDIR /app
+COPY . /app
+EXPOSE 8080
+RUN chmod +x gradle
+RUN gradle clean build
+CMD gradle bootRun
