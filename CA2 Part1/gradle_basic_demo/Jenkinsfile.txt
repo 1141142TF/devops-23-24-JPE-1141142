@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    tools {
+        gradle 8.8 
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -11,9 +13,11 @@ pipeline {
         stage('Assemble') {
             steps {
                 echo 'Assembling...'
-                dir('CA2 Part1/gradle_basic_demo'){ 
+                dir('CA2 Part1/gradle_basic_demo'){
+                sh 'gradle init'
+                sh 'gradle wrapper build'
                 sh 'chmod +x ./gradlew'
-		sh './gradlew wrapper --gradle-version 8.8'
+                sh './gradlew wrapper --gradle-version 8.8'
                 sh './gradlew assemble'
                 }
             }
